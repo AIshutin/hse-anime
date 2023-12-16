@@ -1,0 +1,8 @@
+torch >= 2.0
+torchvision
+piq
+requests
+matplotlib
+wandb
+tensorboard
+tqdm
