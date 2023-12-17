@@ -23,3 +23,13 @@ python3 vae_evolution.py --dim 128 --ddim 16 --edim 16 --gif vae.gif --checkpoin
 ```
 
 ![Evolution gif](https://github.com/AIshutin/hse-anime/blob/master/vae.gif?raw=true "VAE is improving")
+
+## WGAN-GP
+
+Actually, it suffers from mode collapse and doesn't really work
+
+You can try it with:
+
+```shell
+python3 train_gan.py
+```

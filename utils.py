@@ -31,18 +31,6 @@ def calc_grad_norm(model):
     return sum(p.grad.data.norm(2).item() ** 2 for p in model.parameters()) ** 0.5
 
 
-def generate_images_gan(model, N, output_path, device, bs=64):
-    with torch.no_grad():
-        cnt = 0
-        while cnt < N:
-            if N - cnt < bs:
-                bs = N - cnt
-            x = model(bs, device).cpu()
-            for i in range(x.shape[0]):
-                image = to_image(denormalize(x[i]))
-                image.save(os.path.join(output_path, f"{cnt + i}.png"))
-            cnt += bs
-
 def generate_images_vae(model, N, output_path, device, bs=64):
     model.eval()
     with torch.no_grad():
@@ -73,6 +61,7 @@ def compute_fid(dataset1, dataset2):
         fid = fid_metric(first_feats, second_feats).item()
         return fid
 
+
 def compute_ssim(dataset1, dataset2):
     with torch.no_grad():
         dataloader1 = DataLoader(dataset1, 1)
@@ -83,6 +72,22 @@ def compute_ssim(dataset1, dataset2):
             total_ssim += ssim(b1[0], b2[0])
             cnt += 1
         return total_ssim / cnt
+
+
+class Averager:
+    def __init__(self):
+        self.total = 0
+        self.cnt = 0
+    
+    def add(self, value, k=1):
+        self.total += value
+        self.cnt += k
+    
+    def get(self):
+        return self.total / (self.cnt + 1e-7)
+
+    def reset(self):
+        self.total = self.cnt = 0
 
 
 if __name__ == "__main__":
