@@ -31,7 +31,7 @@ def calc_grad_norm(model):
     return sum(p.grad.data.norm(2).item() ** 2 for p in model.parameters()) ** 0.5
 
 
-def generate_images(model, N, output_path, device, bs=64):
+def generate_images_gan(model, N, output_path, device, bs=64):
     with torch.no_grad():
         cnt = 0
         while cnt < N:
@@ -40,6 +40,19 @@ def generate_images(model, N, output_path, device, bs=64):
             x = model(bs, device).cpu()
             for i in range(x.shape[0]):
                 image = to_image(denormalize(x[i]))
+                image.save(os.path.join(output_path, f"{cnt + i}.png"))
+            cnt += bs
+
+def generate_images_vae(model, N, output_path, device, bs=64):
+    model.eval()
+    with torch.no_grad():
+        cnt = 0
+        while cnt < N:
+            if N - cnt < bs:
+                bs = N - cnt
+            x = model.generate(bs, device).cpu()
+            for i in range(x.shape[0]):
+                image = to_image(x[i])
                 image.save(os.path.join(output_path, f"{cnt + i}.png"))
             cnt += bs
 

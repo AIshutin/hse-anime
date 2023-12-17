@@ -8,7 +8,7 @@ os.system('mkdir test_data; mkdir test_data/faces')
 for el in tqdm(sorted(os.listdir('data/data'))):
     if '.png' not in el:
         continue
-    if random.randint(0, 5) == 0:
+    if random.randint(0, 21) == 0:
         os.system(f'cp data/data/{el} test_data/faces/{el}')
     else:
         os.system(f'cp data/data/{el} train_data/faces/{el}')

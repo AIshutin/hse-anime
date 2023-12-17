@@ -6,3 +6,5 @@ test8.png
 saved/
 __pycache__
 wandb
+vae_*/
+baseline_with_goods_augs
