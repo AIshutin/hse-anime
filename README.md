@@ -24,6 +24,13 @@ python3 vae_evolution.py --dim 128 --ddim 16 --edim 16 --gif vae.gif --checkpoin
 
 ![Evolution gif](https://github.com/AIshutin/hse-anime/blob/master/vae.gif?raw=true "VAE is improving")
 
+### Generation
+
+```
+gdown https://drive.google.com/file/d/1yYd8f__s5LUvGya7ic_Y6rrKHNPLLOsZ/view?usp=sharing --fuzzy -O vae.pth
+python3 vae_generate.py --dim 128 --ddim 16 --edim 16 --checkpoint vae.pth
+```
+
 ## WGAN-GP
 
 Actually, it suffers from mode collapse and doesn't really work
